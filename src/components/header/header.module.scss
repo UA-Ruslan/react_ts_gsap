@@ -1,0 +1,46 @@
+.header {
+  position: absolute;
+  width: 100%;
+  top: 50px;
+  z-index: 15;
+  display: flex;
+  padding: 0 70px;
+
+  .hrefContainer {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+
+    .hrefWrapper {
+      display: flex;
+
+      .hrefStyle {
+        margin: 0 25px;
+      }
+    }
+
+    .accountWrapper {
+      display: flex;
+      transition: .2s;
+
+      div .hrefStyle {
+        margin-left: 10px;
+      }
+
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+        transition: .2s;
+      }
+    }
+  }
+
+
+}
+
+
+@media screen and (max-width: 768px) {
+  .header {
+    display: none;
+  }
+}

@@ -1,0 +1,113 @@
+.dropdownBtnAndMenuWrapper {
+  display: none;
+  position: fixed;
+  top: 50px;
+  right: 50px;
+  width: 30px;
+  height: 30px;
+  z-index: 20;
+  overflow: hidden;
+
+  .dropdownMenuWrapper {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: -200vh;
+    left: 0;
+    background: rgb(0, 0, 0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .burgerBtnItemsWrapper {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    .burgerBtnItemCommon {
+      width: 100%;
+      height: 5px;
+      background: white;
+      position: absolute;
+      left: 0;
+      border-radius: 3px;
+      border: 1px solid black;
+
+      &:last-child {
+        width: 45%;
+      }
+    }
+
+    .burgerBtnItem1 {
+      top: 20%;
+    }
+
+    .burgerBtnItem2 {
+      top: calc(50% - 2.5px);
+    }
+
+    .burgerBtnItem3 {
+      bottom: 20%;
+    }
+  }
+}
+
+.hrefContainer {
+  display: flex;
+  flex-direction: column;
+
+  .hrefWrapper {
+    display: flex;
+    flex-direction: column;
+
+    div {
+      margin: 40px;
+
+      .hrefStyle {
+        margin: 25px;
+        font-size: 40px;
+      }
+    }
+  }
+
+  .accountWrapper {
+    display: flex;
+    transition: .2s;
+    padding-left: 60px;
+    margin: 20px 0;
+
+    div {
+      display: flex;
+      align-items: center;
+
+      img {
+        margin: 0 5px 0 0;
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.1);
+      transition: .2s;
+    }
+
+    div .hrefStyle {
+      font-size: 40px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .dropdownBtnAndMenuWrapper {
+    display: block;
+  }
+}

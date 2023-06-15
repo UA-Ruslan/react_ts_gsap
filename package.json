@@ -39,5 +39,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gsap-trial": "^3.12.1",
+    "sass": "^1.63.2"
   }
 }
