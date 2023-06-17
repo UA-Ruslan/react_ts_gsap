@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from "react";
+import React, {useRef, useEffect, FormEvent, useState, ChangeEvent} from "react";
 import style from './secondSection.module.scss'
 import contentComponentStyle from './contentComponent/contentComponent.module.scss'
 import gsap from "gsap-trial";
@@ -15,37 +15,85 @@ import ContentComponent from "./contentComponent/ContentComponent";
 
 gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin);
 
+interface FormDataProps {
+    email: string,
+    name: string,
+}
+
 const SecondSection = () => {
 
+    const [formData, setFormData] = useState<FormDataProps>({
+        email: '',
+        name: '',
+    });
+    const [isEmailValid, setEmailValid] = useState(true);
+    const [isNameValid, setNameValid] = useState(true);
+    const [isEmailEmpty, setIsEmailEmpty] = useState(false);
+    const [isNameEmpty, setIsNameEmpty] = useState(false);
+    const [isSuccess, setSuccess] = useState(false);
 
+    const refSecondSection: any = useRef(null);
+    const refFirstChild: any = useRef(null);
+    const refSecondChild: any = useRef(null);
+    const refThirdChild: any = useRef(null);
     const formRef: any = useRef(null);
-    const refSecondSection: any = useRef(null)
-    const refFirstChild: any = useRef(null)
-    const refSecondChild: any = useRef(null)
-    const refThirdChild: any = useRef(null)
+    const emailInputRef: any = useRef(null);
+    const nameInputRef: any = useRef(null);
+    const btnRef: any = useRef(null);
+    const spanRef: any = useRef(null);
 
     useEffect(() => {
-        const svgPath = formRef.current.querySelector('path');
+        if (isSuccess) {
+            setTimeout(() => {
+                setSuccess(false)
+            }, 5000)
+        }
+    })
 
-        gsap.set(svgPath, {drawSVG: '50% 50%'});
+    useEffect(() => {
 
+        const ctx = gsap.context(() => {
+            const svgPath = formRef.current;
+            const emailInput = emailInputRef.current;
+            const nameInput = nameInputRef.current;
+            const btn = btnRef.current;
+
+            gsap.set(svgPath, {drawSVG: '50% 50%'});
+
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: svgPath,
+                    start: 'bottom 90%',
+                    // markers: true,
+                    onEnter: () => tl.play().timeScale(1), // Перевіряємо напрямок прокрутки і відтворюємо анімацію
+                    onLeaveBack: () => tl.reverse().timeScale(-1), // Відтворюємо анімацію у зворотньому напрямку при зворотній прокрутці   scrub: true, // Включаємо режим scrub
+                },
+            });
+
+            tl.to(svgPath, {drawSVG: '0% 100%', duration: 1});
+            tl.to(emailInput, {opacity: 1, duration: .3,})
+            tl.to(nameInput, {opacity: 1, duration: .3,})
+            tl.to(btn, {opacity: 1, duration: .3,})
+
+        }, refSecondSection);
+        return () => ctx.revert();
+
+    }, []);
+
+    useEffect(() => {
+        const svgPath = formRef.current;
+        const span = spanRef.current;
         const tl = gsap.timeline({
             scrollTrigger: {
-                trigger: formRef.current,
-                start: 'bottom bottom',
-                end: 'bottom 90%',
-                scrub: 0.5,
-                toggleActions: 'play none none reverse',
-                markers: true
+                trigger: svgPath,
+                start: 'bottom 90%',
+                // markers: true,
+                onEnter: () => tl.play().timeScale(1), // Перевіряємо напрямок прокрутки і відтворюємо анімацію
+                onLeaveBack: () => tl.reverse().timeScale(-1), // Відтворюємо анімацію у зворотньому напрямку при зворотній прокрутці   scrub: true, // Включаємо режим scrub
             },
         });
-
-        tl.to(svgPath, {drawSVG: '0% 100%', duration: 5});
-
-        return () => {
-            tl.kill(); // Зупиняємо анімацію при розмонтуванні компонента
-        };
-    }, []);
+        tl.fromTo(span, {opacity: 0, duration: .3,}, {opacity: 1, duration: 1,})
+    }, [isEmailValid, isNameValid, isEmailEmpty, isNameEmpty])
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -141,6 +189,52 @@ const SecondSection = () => {
         junction..</p>
 
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        const {name, value} = e.target;
+        setFormData((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+        e.preventDefault()
+
+        if (formData.email.trim() === '') {
+            setIsEmailEmpty(true);
+            setEmailValid(true)
+        } else if (!isValidEmail(formData.email) && formData.email.trim() != '') {
+            setEmailValid(false)
+            setIsEmailEmpty(false);
+        } else if (isValidEmail(formData.email) && formData.name.trim() === '') {
+            setEmailValid(true)
+            setIsNameEmpty(true)
+        } else if (isValidEmail(formData.email) && formData.name.trim() != '' && !isValidName(formData.name) ) {
+            setEmailValid(true)
+            setIsNameEmpty(false)
+            setNameValid(false)
+        } else {
+            setIsEmailEmpty(false)
+            setEmailValid(true)
+            setIsNameEmpty(false)
+            setNameValid(true)
+            setSuccess(true)
+            setFormData({email: '',name: ''})
+        }
+    }
+
+    const isValidEmail = (emailValue: string) => {
+        const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailValidation.test(emailValue);
+    };
+
+    const isValidName = (name: string) => {
+        const nameValidation = /^[^\d\s]+$/;
+        return nameValidation.test(name);
+    };
+
+    console.log(isSuccess)
+
     return (
         <div ref={refSecondSection} className={style.secondSectionWrapper}>
 
@@ -176,17 +270,57 @@ const SecondSection = () => {
             />
 
             <div className={style.formWrapper}>
-                <svg ref={formRef} viewBox="300 5 200 200" xmlns="http://www.w3.org/2000/svg">
+
+                <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
                     <path
-                        strokeWidth='1'
+                        ref={formRef}
+                        strokeWidth='5'
                         stroke='white'
                         fill='none'
-                        d="M 400 10.812 L 474.939 10.812 C 483.141 10.812 489.79 17.461 489.79 25.663 L 489.79 174.798 C 489.79 183 483.141 189.649 474.939 189.649 L 325.804 189.649 C 317.602 189.649 310.953 183 310.953 174.798 L 310.953 25.663 C 310.953 17.461 317.602 10.812 325.804 10.812 L 325.804 10.812 L 400 10.812"></path>
+                        d="M 251.788 0 L 478.806 0 C 490.511 0 500 9.489 500 21.194 L 500 478.806 C 500 490.511 490.511 500 478.806 500 L 21.194 500 C 9.489 500 0 490.511 0 478.806 L 0 21.194 C 0 9.489 9.489 0 21.194 0 L 21.194 0 L 251.788 0"></path>
                 </svg>
-                <form>
-                    <input className={`${style.inputCommon} ${style.email}`} type={"email"}/>
-                    <input className={`${style.inputCommon} ${style.name}`} type={"text"}/>
-                    <button className={style.submitBtn}>SUBMIT</button>
+
+                <form onSubmit={handleSubmit}>
+
+                    {!isEmailValid &&
+                        <span ref={spanRef} className={`${style.validEmailSpan} ${style.spanCommon}`}>
+                            ENTER A VALID EMAIL
+                        </span>}
+                    {isEmailEmpty &&
+                        <span ref={spanRef} className={`${style.requiredEmailSpan} ${style.spanCommon}`}>
+                            REQUIRED FIELD
+                        </span>}
+
+                    <input
+                        name='email'
+                        value={formData.email}
+                        onChange={handleChange}
+                        ref={emailInputRef}
+                        placeholder='email'
+                        type="text"
+                        className={`${style.email} ${style.inputCommon}`}
+                    />
+
+                    {isNameEmpty &&
+                        <span ref={spanRef} className={`${style.requiredNameSpan} ${style.spanCommon}`}>
+                        REQUIRED FIELD
+                    </span>}
+                    {!isNameValid &&
+                        <span ref={spanRef} className={`${style.validNameSpan} ${style.spanCommon}`}>
+                        EXCEPT NUMBERS
+                    </span>}
+                    <input
+                        name='name'
+                        value={formData.name}
+                        onChange={handleChange}
+                        ref={nameInputRef}
+                        placeholder='name'
+                        type="text"
+                        className={`${style.name} ${style.inputCommon}`}
+                    />
+
+                    <button ref={btnRef} className={style.submitBtn}>SUBMIT</button>
+                    <span style={isSuccess?{opacity:1, transition: '.3s'} : {opacity: 0, transition: '.3s'}} className={`${style.spanSuccess} ${style.spanCommon}`}>The form was sent successfully</span>
                 </form>
             </div>
         </div>
