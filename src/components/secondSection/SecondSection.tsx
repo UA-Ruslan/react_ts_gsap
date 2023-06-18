@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, FormEvent, useState, ChangeEvent} from "react";
+import React, {useRef, useEffect, FormEvent, useState} from "react";
 import style from './secondSection.module.scss'
 import contentComponentStyle from './contentComponent/contentComponent.module.scss'
 import gsap from "gsap-trial";
@@ -41,15 +41,9 @@ const SecondSection = () => {
     const nameInputRef: any = useRef(null);
     const btnRef: any = useRef(null);
     const spanRef: any = useRef(null);
+    const contactUsRef: any = useRef(null)
 
-    useEffect(() => {
-        if (isSuccess) {
-            setTimeout(() => {
-                setSuccess(false)
-            }, 5000)
-        }
-    })
-
+    //------------------------------------form animation-----------------------------------//
     useEffect(() => {
 
         const ctx = gsap.context(() => {
@@ -57,6 +51,7 @@ const SecondSection = () => {
             const emailInput = emailInputRef.current;
             const nameInput = nameInputRef.current;
             const btn = btnRef.current;
+            const contactUs = contactUsRef.current;
 
             gsap.set(svgPath, {drawSVG: '50% 50%'});
 
@@ -64,13 +59,13 @@ const SecondSection = () => {
                 scrollTrigger: {
                     trigger: svgPath,
                     start: 'bottom 90%',
-                    // markers: true,
                     onEnter: () => tl.play().timeScale(1), // Перевіряємо напрямок прокрутки і відтворюємо анімацію
                     onLeaveBack: () => tl.reverse().timeScale(-1), // Відтворюємо анімацію у зворотньому напрямку при зворотній прокрутці   scrub: true, // Включаємо режим scrub
                 },
             });
 
             tl.to(svgPath, {drawSVG: '0% 100%', duration: 1});
+            tl.to(contactUs, {opacity: 1, duration: .3,})
             tl.to(emailInput, {opacity: 1, duration: .3,})
             tl.to(nameInput, {opacity: 1, duration: .3,})
             tl.to(btn, {opacity: 1, duration: .3,})
@@ -87,7 +82,6 @@ const SecondSection = () => {
             scrollTrigger: {
                 trigger: svgPath,
                 start: 'bottom 90%',
-                // markers: true,
                 onEnter: () => tl.play().timeScale(1), // Перевіряємо напрямок прокрутки і відтворюємо анімацію
                 onLeaveBack: () => tl.reverse().timeScale(-1), // Відтворюємо анімацію у зворотньому напрямку при зворотній прокрутці   scrub: true, // Включаємо режим scrub
             },
@@ -95,6 +89,9 @@ const SecondSection = () => {
         tl.fromTo(span, {opacity: 0, duration: .3,}, {opacity: 1, duration: 1,})
     }, [isEmailValid, isNameValid, isEmailEmpty, isNameEmpty])
 
+    //------------------------------------/form animation-----------------------------------//
+
+    //-------------------------contentComponents animation----------------------------------//
     useEffect(() => {
         const ctx = gsap.context(() => {
             const child = refFirstChild.current;
@@ -104,21 +101,19 @@ const SecondSection = () => {
                     trigger: child,
                     start: "top 60%",
                     end: "top 0",
-                    // markers: true,
                     scrub: 2,
                 }
             })
 
-            tl.to(child, {x: "100vw", duration: 5, ease: "none",})
+            tl.to(child, {x: "100vw", opacity: 1, duration: 5, ease: "none",})
                 .to(child, {x: "100vw", duration: 10, ease: "none"})
-                .to(child, {x: "0vw", duration: 5, ease: "none",})
+                .to(child, {x: "0vw", opacity: 0, duration: 5, ease: "none",})
 
 
         }, refSecondSection);
         return () => ctx.revert();
 
     }, []);
-
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -129,13 +124,12 @@ const SecondSection = () => {
                     trigger: child,
                     start: "-230px 60%",
                     end: "-230px -300",
-                    // markers: true,
                     scrub: 2,
                 }
             })
-            tl.to(child, {x: "-100vw", duration: 5, ease: "none",})
+            tl.to(child, {x: "-100vw", opacity: 1, duration: 5, ease: "none",})
                 .to(child, {x: "-100vw", duration: 10, ease: "none"})
-                .to(child, {x: "0vw", duration: 5, ease: "none",})
+                .to(child, {x: "0vw", opacity: 0, duration: 5, ease: "none",})
 
         }, refSecondSection);
         return () => ctx.revert();
@@ -150,44 +144,29 @@ const SecondSection = () => {
                     trigger: child,
                     start: "top 81%",
                     end: "top 0",
-                    // markers: true,
                     scrub: 2,
                 }
             })
 
-            tl.to(child, {x: "100vw", duration: 5, ease: "none",})
+            tl.to(child, {x: "100vw", opacity: 1, duration: 5, ease: "none",})
                 .to(child, {x: "100vw", duration: 10, ease: "none"})
-            // .to(child, {x: "200vw", duration: 5, ease: "none",})
 
 
         }, refSecondSection);
         return () => ctx.revert();
     }, []);
 
+    //-------------------------/contentComponents animation----------------------------------//
 
-    const h2FirstChild = <h2>What level of hiker <br/> are you?</h2>
-    const h2SecondChild = <h2>Picking the right<br/> Hiking Gear!</h2>
-    const h2ThirdChild = <h2>Understand Your<br/>Map & Timing</h2>
+    //----------------------------form validation and submit---------------------------------//
 
-    const pFirstChild = <p>Determining what level of hiker you are can be an important tool when <br/> planning future
-        hikes. This
-        hiking level guide will help you plan hikes <br/> according to different hike ratings set by various
-        websites like All Trails and <br/> Modern Hiker. What type of hiker are you – novice, moderate,
-        advanced <br/> moderate, expert, or expert backpacker? </p>
-    const pSecondChild = <p>The nice thing about beginning hiking is that you don’t really need any <br/> special gear,
-        you
-        can probably get away with things you already have. <br/>
-        Let’s start with clothing. A typical mistake hiking beginners make is wearing<br/> jeans and regular clothes,
-        which
-        will get heavy and chafe wif they get <br/> sweaty or wet.</p>
-    const pThirdChild = <p>To start, print out the hiking guide and map. If it’s raining, throw them in a <br/> Zip-Lock
-        bag.
-        Read over the guide, study the map, and have a good idea <br/> of what to expect. I like to know what my next
-        landmark
-        is as I hike. For <br/> example, I’ll read the guide and know that say, in a mile, I make a right turn <br/> at
-        the
-        junction..</p>
-
+    useEffect(() => {
+        if (isSuccess) {
+            setTimeout(() => {
+                setSuccess(false)
+            }, 5000)
+        }
+    })
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const {name, value} = e.target;
@@ -209,7 +188,7 @@ const SecondSection = () => {
         } else if (isValidEmail(formData.email) && formData.name.trim() === '') {
             setEmailValid(true)
             setIsNameEmpty(true)
-        } else if (isValidEmail(formData.email) && formData.name.trim() != '' && !isValidName(formData.name) ) {
+        } else if (isValidEmail(formData.email) && formData.name.trim() != '' && !isValidName(formData.name)) {
             setEmailValid(true)
             setIsNameEmpty(false)
             setNameValid(false)
@@ -219,7 +198,7 @@ const SecondSection = () => {
             setIsNameEmpty(false)
             setNameValid(true)
             setSuccess(true)
-            setFormData({email: '',name: ''})
+            setFormData({email: '', name: ''})
         }
     }
 
@@ -233,7 +212,7 @@ const SecondSection = () => {
         return nameValidation.test(name);
     };
 
-    console.log(isSuccess)
+//------------------------------------/form validation and submit-----------------------------//
 
     return (
         <div ref={refSecondSection} className={style.secondSectionWrapper}>
@@ -244,8 +223,12 @@ const SecondSection = () => {
                 childStyle={contentComponentStyle.mainChild}
                 childRef={refFirstChild}
                 h4Content={'GET STARTED'}
-                h2Content={h2FirstChild}
-                pContent={pFirstChild}
+                h2Content={<h2>What level of hiker <br/> are you?</h2>}
+                pContent={<p>Determining what level of hiker you are can be an important tool when <br/> planning future
+                    hikes. This
+                    hiking level guide will help you plan hikes <br/> according to different hike ratings set by various
+                    websites like All Trails and <br/> Modern Hiker. What type of hiker are you – novice, moderate,
+                    advanced <br/> moderate, expert, or expert backpacker? </p>}
             />
 
             <ContentComponent
@@ -253,9 +236,15 @@ const SecondSection = () => {
                 mainImgSrc={mainImage02}
                 childStyle={`${contentComponentStyle.mainChild} ${contentComponentStyle.secondChild}`}
                 childRef={refSecondChild}
-                pContent={pSecondChild}
-                h2Content={h2SecondChild}
                 h4Content={'HIKING ESSENTIALS'}
+                h2Content={<h2>Picking the right<br/> Hiking Gear!</h2>}
+                pContent={<p>The nice thing about beginning hiking is that you don’t really need any <br/> special gear,
+                    you
+                    can probably get away with things you already have. <br/>
+                    Let’s start with clothing. A typical mistake hiking beginners make is wearing<br/> jeans and regular clothes,
+                    which
+                    will get heavy and chafe wif they get <br/> sweaty or wet.</p>}
+
 
             />
 
@@ -265,12 +254,18 @@ const SecondSection = () => {
                 childStyle={`${contentComponentStyle.mainChild} ${contentComponentStyle.thirdChild}`}
                 childRef={refThirdChild}
                 h4Content={'WHERE YOU GO IS THE KEY'}
-                h2Content={h2ThirdChild}
-                pContent={pThirdChild}
+                h2Content={<h2>Understand Your<br/>Map & Timing</h2>}
+                pContent={<p>To start, print out the hiking guide and map. If it’s raining, throw them in a <br/> Zip-Lock
+                    bag.
+                    Read over the guide, study the map, and have a good idea <br/> of what to expect. I like to know what my next
+                    landmark
+                    is as I hike. For <br/> example, I’ll read the guide and know that say, in a mile, I make a right turn <br/> at
+                    the
+                    junction..</p>}
             />
 
             <div className={style.formWrapper}>
-
+                <h2 ref={contactUsRef} className={style.contactUS}>CONTACT US</h2>
                 <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
                     <path
                         ref={formRef}
@@ -320,7 +315,8 @@ const SecondSection = () => {
                     />
 
                     <button ref={btnRef} className={style.submitBtn}>SUBMIT</button>
-                    <span style={isSuccess?{opacity:1, transition: '.3s'} : {opacity: 0, transition: '.3s'}} className={`${style.spanSuccess} ${style.spanCommon}`}>The form was sent successfully</span>
+                    <span style={isSuccess ? {opacity: 1, transition: '.3s'} : {opacity: 0, transition: '.3s'}}
+                          className={`${style.spanSuccess} ${style.spanCommon}`}>The form was sent successfully</span>
                 </form>
             </div>
         </div>

@@ -16,6 +16,7 @@ const HeaderAndDropMenuHrefs: React.FC<LogoComponentProps> = ({
                                                               }) => {
     return (
         <div className={hrefContainer}>
+
             <div></div>
             <div className={hrefWrapper}>
                 <div>

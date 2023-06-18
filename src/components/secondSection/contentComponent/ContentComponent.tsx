@@ -1,6 +1,7 @@
-import React, {ReactNode} from "react";
+import React, {ReactNode, useEffect, useRef, useState} from "react";
 import style from './contentComponent.module.scss'
 import arrowImage from '../../../img/secondSection/arrow.png'
+import gsap from "gsap-trial";
 
 
 interface ContentComponentProps {
@@ -22,6 +23,22 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                                                                h2Content,
                                                                pContent,
                                                            }) => {
+    const [isReadMoreActive, setReadMoreActive] = useState(false)
+
+    const arrowRef: any = useRef(null)
+
+    const cxt = gsap.context(() => {
+        const arrow = arrowRef.current;
+
+        const tl = gsap.timeline()
+    })
+    useEffect(() => {
+
+    },[isReadMoreActive])
+
+    const handleClick = () => {
+        setReadMoreActive(!isReadMoreActive)
+    }
 
     return (
         <div ref={childRef} className={childStyle}>
@@ -40,7 +57,7 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                 </div>
                 <div className={style.readMoreWrapper}>
                     <p>read more</p>
-                    <img src={arrowImage} width={24} height={16}  alt="arrowImg"/>
+                    <img onClick={handleClick} src={arrowImage} width={24} height={16}  alt="arrowImg"/>
                 </div>
             </div>
             <div className={style.mainImgWrapper}>

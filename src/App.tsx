@@ -8,6 +8,7 @@ import FirstSection from "./components/firstSection/FirstSection";
 import BurgerBtn from "./components/burgerBtn/BurgerBtn";
 import HeaderAndDropMenuHrefs from "./components/headerAndDropMenuHrefs/HeaderAndDropMenuHrefs";
 import SecondSection from "./components/secondSection/SecondSection";
+import Footer from "./components/footer/Footer";
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
@@ -49,6 +50,8 @@ function App() {
                     <FirstSection/>
 
                     <SecondSection/>
+
+                    <Footer/>
 
                 </div>
 

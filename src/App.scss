@@ -5,6 +5,11 @@
   src: url("fonts/PlayfairDisplay-Regular.ttf");
 }
 
+@font-face {
+  font-family: PlayfairLight;
+  src: url("fonts/Playfair_144pt-Light.ttf");
+}
+
 * {
   box-sizing: border-box;
 }
@@ -18,7 +23,6 @@ body {
 
 .appWrapper {
   width: 100vw;
-  //height: 3000px;
   position: relative;
   top: 0;
   left: 0;
@@ -53,6 +57,7 @@ h2 {
 h4 {
   color: $colorYellow;
   letter-spacing: 5px;
+  font-size: 20px;
 }
 
 p {
