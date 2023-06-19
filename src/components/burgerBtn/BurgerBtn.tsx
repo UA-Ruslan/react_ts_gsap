@@ -22,20 +22,20 @@ const BurgerBtn: React.FC<BurgerBtnProps> = ({isDropdownMenuActive, setDropdownM
 
         tl.current.to(refItem1.current, {
             transformOrigin: 'top left',
-            rotation: "45",
+            rotation: 45,
             translateX: "3px",
             translateY: "-4px",
             border: "none",
         }, 0)
         tl.current.to(refItem2.current, {
             transformOrigin: 'bottom left',
-            rotation: "-45",
+            rotation: -45,
             translateY: "9px",
             translateX: "3px",
             border: "none",
         }, 0)
         tl.current.to(refItem3.current, {
-            translateX: "30",
+            translateX: 30,
             opacity: 0,
             border: "none",
         }, 0)
