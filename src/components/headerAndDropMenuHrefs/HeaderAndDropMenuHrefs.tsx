@@ -6,6 +6,11 @@ interface LogoComponentProps {
     hrefStyle?: string;
     accountWrapper?: string;
     hrefContainer?: string;
+    dataId? : {
+        id1: string
+        id2: string
+        id3: string
+    };
 }
 
 const HeaderAndDropMenuHrefs: React.FC<LogoComponentProps> = ({
@@ -13,6 +18,7 @@ const HeaderAndDropMenuHrefs: React.FC<LogoComponentProps> = ({
                                                                   hrefStyle,
                                                                   accountWrapper,
                                                                   hrefContainer,
+                                                                  dataId = { id1: '', id2: '', id3: '' },
                                                               }) => {
     return (
         <div className={hrefContainer}>
@@ -20,7 +26,8 @@ const HeaderAndDropMenuHrefs: React.FC<LogoComponentProps> = ({
             <div></div>
             <div className={hrefWrapper}>
                 <div>
-                    <a className={hrefStyle} href="src/components/header/Header#">Equipment</a>
+                    {/*<a className={hrefStyle} href='#'>Equipment</a>*/}
+                    <a className={hrefStyle} href={`#${dataId.id1}`}>Equipment</a>
                 </div>
                 <div>
                     <a className={hrefStyle} href="src/components/header/Header#">About us</a>

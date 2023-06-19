@@ -6,7 +6,7 @@
   justify-content: space-between;
   max-width: 100vw;
   width: 100%;
-  height: 60vh;
+  height: 80vh;
   position: absolute;
   top: 0;
   left: -100vw;
@@ -67,24 +67,17 @@
 
       img {
         cursor: pointer;
-
-        transition: .3s;
-        &:hover {
-          transition: .3s;
-          transform: scale(1.5);
-          background: white;
-        }
       }
 
       p {
         margin-right: 20px;
+
       }
     }
 
     .readMoreContent {
-      width: 100%;
-      height: 100px;
-      background: red;
+      width: 95%;
+      height: 0;
       padding-right: 50px;
       overflow: auto;
     }
@@ -139,11 +132,16 @@
   }
 
   .secondChild {
-    //display: none;
     .childContentWrapper {
       align-items: flex-end;
       padding: 0 20px;
     }
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .mainChild {
+    height: 60vh;
   }
 }
 

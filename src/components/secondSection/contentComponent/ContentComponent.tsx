@@ -12,6 +12,7 @@ interface ContentComponentProps {
     h2Content: ReactNode,
     h4Content: string,
     pContent: ReactNode,
+    readMoreContent?: ReactNode
 }
 
 const ContentComponent: React.FC<ContentComponentProps> = ({
@@ -22,26 +23,54 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                                                                h4Content,
                                                                h2Content,
                                                                pContent,
+                                                               readMoreContent,
                                                            }) => {
+
     const [isReadMoreActive, setReadMoreActive] = useState(false)
 
     const arrowRef: any = useRef(null);
     const tl: any = useRef(null);
+    const readMoreContentRef: any = useRef(null);
+
     useEffect(() => {
-        tl.current = gsap.timeline({paused: true});
+        tl.current = gsap.timeline({ paused: true });
         tl.current.to(arrowRef.current, {
             rotation: 90,
-        })
-    }, [])
+            duration: 0.1,
+        },0);
+        tl.current.to(readMoreContentRef.current, {
+            height: 100,
+            duration: 0.1,
+        },.2);
+
+    }, []);
 
     useEffect(() => {
         isReadMoreActive ? tl.current.play() : tl.current.reverse();
     }, [isReadMoreActive])
 
+    const handleMouseEnter = () => {
+        gsap.to(arrowRef.current, {
+            scale: 1.2,
+            duration: 0.1,
+        });
+    };
+
+    const handleMouseLeave = () => {
+        gsap.to(arrowRef.current, {
+            scale: 1,
+            duration: 0.1,
+        });
+    };
+
     const handleClick = () => {
         setReadMoreActive(!isReadMoreActive)
     }
-    console.log(isReadMoreActive)
+
+    const handleOnBlur = () => {
+        setReadMoreActive(false)
+    }
+    // console.log(isReadMoreActive)
     return (
         <div ref={childRef} className={childStyle}>
             <div className={style.childContentWrapper}>
@@ -59,21 +88,20 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                 </div>
                 <div className={style.readMoreWrapper}>
                     <p>read more</p>
-                    <img onClick={handleClick} ref={arrowRef} src={arrowImage} width={24} height={16} alt="arrowImg"/>
+                    <img
+                        tabIndex={0}
+                        onBlur={handleOnBlur}
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                        onClick={handleClick}
+                         ref={arrowRef}
+                         src={arrowImage}
+                         width={24}
+                         height={16}
+                         alt="arrowImg"/>
                 </div>
-                <div className={style.readMoreContent}>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias at autem consequuntur deleniti
-                        ducimus eligendi ex exercitationem facilis fuga fugit illum ipsam laboriosam laborum laudantium,
-                        minima mollitia nam natus necessitatibus nemo nesciunt nostrum nulla omnis optio pariatur
-                        perferendis porro quae quasi quia quod rem repellendus rerum soluta ullam unde ut veniam vero!
-                        Assumenda commodi consequatur delectus doloremque dolorum eius enim eos expedita ipsum iure,
-                        laboriosam, maiores modi molestiae nobis odio sapiente totam vel voluptates. Adipisci aliquam
-                        consequatur cum dicta dolor dolorem earum eligendi fugit harum, in laborum magni nostrum
-                        officiis
-                        pariatur perferendis quas repudiandae similique temporibus totam ullam voluptate
-                        voluptatibus!
-                    </p>
+                <div ref={readMoreContentRef} className={style.readMoreContent}>
+                    {readMoreContent}
                 </div>
             </div>
             <div className={style.mainImgWrapper}>

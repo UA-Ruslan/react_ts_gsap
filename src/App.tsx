@@ -12,12 +12,25 @@ import Footer from "./components/footer/Footer";
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
+interface dataIdProps {
+    id1: string,
+    id2: string,
+    id3: string,
+}
+
 function App() {
 
     const [isDropdownMenuActive, setDropdownMenuActive] = useState<boolean>(false)
 
     const main: any = useRef(null)
     const smoother: any = useRef(null)
+
+    const dataId: dataIdProps = {
+        id1: 'equipment',
+        id2: 'aboutUs',
+        id3: 'blog',
+    }
+
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
 
@@ -40,6 +53,7 @@ function App() {
                     accountWrapper={style.accountWrapper}
                     hrefWrapper={style.hrefWrapper}
                     hrefStyle={style.hrefStyle}
+                    dataId={dataId}
                 />}
             />
 
