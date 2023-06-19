@@ -19,8 +19,18 @@ interface FormDataProps {
     email: string,
     name: string,
 }
+interface dataIdProps {
+    id1: string,
+    id2: string,
+    id3: string,
+    // dataId? : {
+    //     id1: string
+    //     id2: string
+    //     id3: string
+    // };
+}
 
-const SecondSection = () => {
+const SecondSection: React.FC<dataIdProps> = ({id1,id2,id3,}) => {
 
     const [formData, setFormData] = useState<FormDataProps>({
         email: '',
@@ -218,6 +228,7 @@ const SecondSection = () => {
         <div ref={refSecondSection} className={style.secondSectionWrapper}>
 
             <ContentComponent
+                id={id2}
                 iconImgSrc={icon01}
                 mainImgSrc={mainImage01}
                 childStyle={contentComponentStyle.mainChild}
@@ -241,6 +252,7 @@ const SecondSection = () => {
             />
 
             <ContentComponent
+                id={id1}
                 iconImgSrc={icon02}
                 mainImgSrc={mainImage02}
                 childStyle={`${contentComponentStyle.mainChild} ${contentComponentStyle.secondChild}`}
@@ -270,6 +282,7 @@ const SecondSection = () => {
             />
 
             <ContentComponent
+                id={id3}
                 iconImgSrc={icon03}
                 mainImgSrc={mainImage03}
                 childStyle={`${contentComponentStyle.mainChild} ${contentComponentStyle.thirdChild}`}

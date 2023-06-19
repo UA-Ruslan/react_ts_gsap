@@ -31,6 +31,10 @@ function App() {
         id3: 'blog',
     }
 
+    const id1: string = 'equipment'
+    const id2: string = 'aboutUs'
+    const id3: string = 'blog'
+
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
 
@@ -53,7 +57,10 @@ function App() {
                     accountWrapper={style.accountWrapper}
                     hrefWrapper={style.hrefWrapper}
                     hrefStyle={style.hrefStyle}
-                    dataId={dataId}
+                    // dataId={dataId}
+                    id1={id1}
+                    id2={id2}
+                    id3={id3}
                 />}
             />
 
@@ -63,7 +70,7 @@ function App() {
 
                     <FirstSection/>
 
-                    <SecondSection/>
+                    <SecondSection id2={id2} id3={id3}    id1={id1}/>
 
                     <Footer/>
 

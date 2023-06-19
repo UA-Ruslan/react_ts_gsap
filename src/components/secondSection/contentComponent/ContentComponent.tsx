@@ -12,7 +12,8 @@ interface ContentComponentProps {
     h2Content: ReactNode,
     h4Content: string,
     pContent: ReactNode,
-    readMoreContent?: ReactNode
+    readMoreContent?: ReactNode,
+    id: string,
 }
 
 const ContentComponent: React.FC<ContentComponentProps> = ({
@@ -24,6 +25,7 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                                                                h2Content,
                                                                pContent,
                                                                readMoreContent,
+                                                               id,
                                                            }) => {
 
     const [isReadMoreActive, setReadMoreActive] = useState(false)
@@ -33,15 +35,15 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
     const readMoreContentRef: any = useRef(null);
 
     useEffect(() => {
-        tl.current = gsap.timeline({ paused: true });
+        tl.current = gsap.timeline({paused: true});
         tl.current.to(arrowRef.current, {
             rotation: 90,
             duration: 0.1,
-        },0);
+        }, 0);
         tl.current.to(readMoreContentRef.current, {
             height: 100,
             duration: 0.1,
-        },.2);
+        }, .2);
 
     }, []);
 
@@ -70,9 +72,9 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
     const handleOnBlur = () => {
         setReadMoreActive(false)
     }
-    // console.log(isReadMoreActive)
+    // console.log(dataId)
     return (
-        <div ref={childRef} className={childStyle}>
+        <div id={id} ref={childRef} className={childStyle}>
             <div className={style.childContentWrapper}>
                 <div className={style.icon01Wrapper}>
                     <img src={iconImgSrc} alt="iconImg"/>
@@ -94,11 +96,11 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                         onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave}
                         onClick={handleClick}
-                         ref={arrowRef}
-                         src={arrowImage}
-                         width={24}
-                         height={16}
-                         alt="arrowImg"/>
+                        ref={arrowRef}
+                        src={arrowImage}
+                        width={24}
+                        height={16}
+                        alt="arrowImg"/>
                 </div>
                 <div ref={readMoreContentRef} className={style.readMoreContent}>
                     {readMoreContent}
