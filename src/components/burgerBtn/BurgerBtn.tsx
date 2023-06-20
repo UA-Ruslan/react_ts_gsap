@@ -5,10 +5,10 @@ import gsap from "gsap-trial";
 interface BurgerBtnProps {
     isDropdownMenuActive: boolean;
     setDropdownMenuActive: React.Dispatch<React.SetStateAction<boolean>>;
-    children: React.ReactNode;
+    HeaderAndDropMenuHrefs: React.ReactNode;
 }
 
-const BurgerBtn: React.FC<BurgerBtnProps> = ({isDropdownMenuActive, setDropdownMenuActive, children}) => {
+const BurgerBtn: React.FC<BurgerBtnProps> = ({isDropdownMenuActive, setDropdownMenuActive, HeaderAndDropMenuHrefs}) => {
 
     const refItem1: any = useRef(null);
     const refItem2: any = useRef(null);
@@ -58,7 +58,7 @@ const BurgerBtn: React.FC<BurgerBtnProps> = ({isDropdownMenuActive, setDropdownM
     return (
         <div className={style.dropdownBtnAndMenuWrapper}>
             <div ref={dropMenu} className={style.dropdownMenuWrapper}>
-                {children}
+                {HeaderAndDropMenuHrefs}
             </div>
             <div onClick={handleClick} className={style.burgerBtnItemsWrapper}>
                 <div ref={refItem1} className={`${style.burgerBtnItemCommon} ${style.burgerBtnItem1}`}></div>

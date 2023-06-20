@@ -11,14 +11,51 @@ import arrow from "../../img/firstSectionImages/arrow.png";
 import Header from "../header/Header";
 import LogoComponent from "../logoComponent/LogoComponent";
 
-const FirstSection = () => {
+interface handleClick {
+    handleScrollToFirstChild: (event: React.MouseEvent<HTMLAnchorElement>) => void,
+    handleScrollToSecondChild: (event: React.MouseEvent<HTMLAnchorElement>) => void,
+    handleScrollToThirdChild: (event: React.MouseEvent<HTMLAnchorElement>) => void,
+    handleScrollToContactUs: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    setDropdownMenuActive: React.Dispatch<React.SetStateAction<boolean>>,
+
+    refSecondChild:any,
+    smoother:React.PropsWithRef<any>,
+}
+
+const FirstSection: React.FC<handleClick> = ({
+                                                 handleScrollToFirstChild,
+                                                 handleScrollToSecondChild,
+                                                 handleScrollToThirdChild,
+                                                 handleScrollToContactUs,
+                                                 setDropdownMenuActive,
+
+                                                 refSecondChild,
+                                                 smoother,
+                                             }) => {
+
+    const handleInstagramClick = () => {
+        window.open('https://www.Instagram.com/', '_blank');
+    };
+    const handleTwitterClick = () => {
+        window.open('https://www.twitter.com/', '_blank');
+    };
+
     return (
         <div className={style.firstSectionWrapper}>
             <div data-speed="clamp(0)" className={style.contentWrapper}>
 
                 <LogoComponent customStyle={style.firstSectionLogo}/>
 
-                <Header/>
+                <Header
+                    setDropdownMenuActive={setDropdownMenuActive}
+                    handleScrollToFirstChild={handleScrollToFirstChild}
+                    handleScrollToSecondChild={handleScrollToSecondChild}
+                    handleScrollToThirdChild={handleScrollToThirdChild}
+                    handleScrollToContactUs={handleScrollToContactUs}
+
+                    smoother={smoother}
+                    refSecondChild={refSecondChild}
+                />
 
                 <div className={style.contentContainer}>
                     <div className={style.followUs}>
@@ -26,8 +63,14 @@ const FirstSection = () => {
                             <p>Follow us</p>
                         </div>
                         <div className={style.iconsWrapper}>
-                            <img src={instagram} width={24} height={24} alt="instagramImg"/>
-                            <img src={twitter} width={24} height={24} alt="twitterImg"/>
+                            <a href="https://www.instagram.com/" target="_blank">
+                                <img onClick={handleInstagramClick} src={instagram} width={24} height={24}
+                                     alt="instagramImg"/>
+                            </a>
+                            <a href="https://www.twitter.com/" target="_blank">
+                                <img onClick={handleTwitterClick} src={twitter} width={24} height={24}
+                                     alt="twitterImg"/>
+                            </a>
                         </div>
                     </div>
                     <div className={style.titleWrapper}>

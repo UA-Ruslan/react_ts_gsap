@@ -13,7 +13,6 @@ interface ContentComponentProps {
     h4Content: string,
     pContent: ReactNode,
     readMoreContent?: ReactNode,
-    id: string,
 }
 
 const ContentComponent: React.FC<ContentComponentProps> = ({
@@ -25,7 +24,6 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                                                                h2Content,
                                                                pContent,
                                                                readMoreContent,
-                                                               id,
                                                            }) => {
 
     const [isReadMoreActive, setReadMoreActive] = useState(false)
@@ -72,9 +70,9 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
     const handleOnBlur = () => {
         setReadMoreActive(false)
     }
-    // console.log(dataId)
+
     return (
-        <div id={id} ref={childRef} className={childStyle}>
+        <div ref={childRef} className={childStyle}>
             <div className={style.childContentWrapper}>
                 <div className={style.icon01Wrapper}>
                     <img src={iconImgSrc} alt="iconImg"/>

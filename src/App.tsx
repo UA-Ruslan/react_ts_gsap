@@ -2,7 +2,6 @@ import React, {useRef, useLayoutEffect, useState} from 'react';
 import './App.scss';
 import style from "./components/burgerBtn/burgerBtn.module.scss"
 import gsap from 'gsap-trial';
-import {ScrollTrigger} from 'gsap-trial/ScrollTrigger';
 import {ScrollSmoother} from 'gsap-trial/ScrollSmoother';
 import FirstSection from "./components/firstSection/FirstSection";
 import BurgerBtn from "./components/burgerBtn/BurgerBtn";
@@ -10,30 +9,19 @@ import HeaderAndDropMenuHrefs from "./components/headerAndDropMenuHrefs/HeaderAn
 import SecondSection from "./components/secondSection/SecondSection";
 import Footer from "./components/footer/Footer";
 
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+gsap.registerPlugin(ScrollSmoother);
 
-interface dataIdProps {
-    id1: string,
-    id2: string,
-    id3: string,
-}
-
-function App() {
+const App: React.FC = () => {
 
     const [isDropdownMenuActive, setDropdownMenuActive] = useState<boolean>(false)
 
-    const main: any = useRef(null)
-    const smoother: any = useRef(null)
+    const main: React.RefObject<HTMLDivElement> | null = useRef(null)
+    const smoother: React.PropsWithRef<any> = useRef(null)
+    const refFirstChild: React.RefObject<HTMLDivElement> | null = useRef(null);
+    const refSecondChild: React.RefObject<HTMLDivElement> | null = useRef(null);
+    const refThirdChild: React.RefObject<HTMLDivElement> | null = useRef(null);
+    const formRef: React.RefObject<HTMLDivElement> | null = useRef(null)
 
-    const dataId: dataIdProps = {
-        id1: 'equipment',
-        id2: 'aboutUs',
-        id3: 'blog',
-    }
-
-    const id1: string = 'equipment'
-    const id2: string = 'aboutUs'
-    const id3: string = 'blog'
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
@@ -46,21 +34,52 @@ function App() {
         return () => ctx.revert();
     }, []);
 
+
+
+
+    const handleScrollToFirstChild = (event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+        const ref = refFirstChild.current
+        smoother.current.scrollTo(ref, true, 'bottom bottom');
+    };
+
+    const handleScrollToSecondChild = (event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+        const ref = refSecondChild.current
+        smoother.current.scrollTo(ref, true, 'bottom bottom');
+    };
+
+    const handleScrollToThirdChild = (event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+        const ref = refThirdChild.current
+        smoother.current.scrollTo(ref, true, 'bottom bottom');
+    };
+
+    const handleScrollToContactUs = (event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault()
+        const ref = formRef.current;
+        smoother.current.scrollTo(ref, true, 'center center')
+    }
+
     return (
         <div id='smooth-wrapper' ref={main}>
 
             <BurgerBtn
                 isDropdownMenuActive={isDropdownMenuActive}
                 setDropdownMenuActive={setDropdownMenuActive}
-                children={<HeaderAndDropMenuHrefs
+                HeaderAndDropMenuHrefs={<HeaderAndDropMenuHrefs
+                    handleScrollToFirstChild={handleScrollToFirstChild}
+                    handleScrollToSecondChild={handleScrollToSecondChild}
+                    handleScrollToThirdChild={handleScrollToThirdChild}
+                    handleScrollToContactUs={handleScrollToContactUs}
+                    setDropdownMenuActive={setDropdownMenuActive}
                     hrefContainer={style.hrefContainer}
                     accountWrapper={style.accountWrapper}
                     hrefWrapper={style.hrefWrapper}
                     hrefStyle={style.hrefStyle}
-                    // dataId={dataId}
-                    id1={id1}
-                    id2={id2}
-                    id3={id3}
+
+                    smoother={smoother}
+                    refSecondChild={refSecondChild}
                 />}
             />
 
@@ -68,9 +87,23 @@ function App() {
 
                 <div className='appWrapper'>
 
-                    <FirstSection/>
+                    <FirstSection
+                        handleScrollToFirstChild={handleScrollToFirstChild}
+                        handleScrollToSecondChild={handleScrollToSecondChild}
+                        handleScrollToThirdChild={handleScrollToThirdChild}
+                        handleScrollToContactUs={handleScrollToContactUs}
+                        setDropdownMenuActive={setDropdownMenuActive}
 
-                    <SecondSection id2={id2} id3={id3}    id1={id1}/>
+                        smoother={smoother}
+                        refSecondChild={refSecondChild}
+                    />
+
+                    <SecondSection
+                        refFirstChild={refFirstChild}
+                        refSecondChild={refSecondChild}
+                        refThirdChild={refThirdChild}
+                        formRef={formRef}
+                    />
 
                     <Footer/>
 

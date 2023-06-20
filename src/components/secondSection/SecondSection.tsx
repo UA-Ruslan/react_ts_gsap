@@ -19,18 +19,15 @@ interface FormDataProps {
     email: string,
     name: string,
 }
-interface dataIdProps {
-    id1: string,
-    id2: string,
-    id3: string,
-    // dataId? : {
-    //     id1: string
-    //     id2: string
-    //     id3: string
-    // };
+
+interface SecondSectionProps {
+    refFirstChild:any,
+    refSecondChild:any,
+    refThirdChild:any,
+    formRef:any,
 }
 
-const SecondSection: React.FC<dataIdProps> = ({id1,id2,id3,}) => {
+const SecondSection: React.FC<SecondSectionProps> = ({refFirstChild, refSecondChild, refThirdChild, formRef,}) => {
 
     const [formData, setFormData] = useState<FormDataProps>({
         email: '',
@@ -43,10 +40,10 @@ const SecondSection: React.FC<dataIdProps> = ({id1,id2,id3,}) => {
     const [isSuccess, setSuccess] = useState(false);
 
     const refSecondSection: any = useRef(null);
-    const refFirstChild: any = useRef(null);
-    const refSecondChild: any = useRef(null);
-    const refThirdChild: any = useRef(null);
-    const formRef: any = useRef(null);
+    // const refFirstChild: any = useRef(null);
+    // const refSecondChild: any = useRef(null);
+    // const refThirdChild: any = useRef(null);
+    // const formRef: any = useRef(null);
     const emailInputRef: any = useRef(null);
     const nameInputRef: any = useRef(null);
     const btnRef: any = useRef(null);
@@ -192,13 +189,13 @@ const SecondSection: React.FC<dataIdProps> = ({id1,id2,id3,}) => {
         if (formData.email.trim() === '') {
             setIsEmailEmpty(true);
             setEmailValid(true)
-        } else if (!isValidEmail(formData.email) && formData.email.trim() != '') {
+        } else if (!isValidEmail(formData.email) && formData.email.trim() !== '') {
             setEmailValid(false)
             setIsEmailEmpty(false);
         } else if (isValidEmail(formData.email) && formData.name.trim() === '') {
             setEmailValid(true)
             setIsNameEmpty(true)
-        } else if (isValidEmail(formData.email) && formData.name.trim() != '' && !isValidName(formData.name)) {
+        } else if (isValidEmail(formData.email) && formData.name.trim() !== '' && !isValidName(formData.name)) {
             setEmailValid(true)
             setIsNameEmpty(false)
             setNameValid(false)
@@ -228,7 +225,6 @@ const SecondSection: React.FC<dataIdProps> = ({id1,id2,id3,}) => {
         <div ref={refSecondSection} className={style.secondSectionWrapper}>
 
             <ContentComponent
-                id={id2}
                 iconImgSrc={icon01}
                 mainImgSrc={mainImage01}
                 childStyle={contentComponentStyle.mainChild}
@@ -252,7 +248,6 @@ const SecondSection: React.FC<dataIdProps> = ({id1,id2,id3,}) => {
             />
 
             <ContentComponent
-                id={id1}
                 iconImgSrc={icon02}
                 mainImgSrc={mainImage02}
                 childStyle={`${contentComponentStyle.mainChild} ${contentComponentStyle.secondChild}`}
@@ -282,7 +277,6 @@ const SecondSection: React.FC<dataIdProps> = ({id1,id2,id3,}) => {
             />
 
             <ContentComponent
-                id={id3}
                 iconImgSrc={icon03}
                 mainImgSrc={mainImage03}
                 childStyle={`${contentComponentStyle.mainChild} ${contentComponentStyle.thirdChild}`}
