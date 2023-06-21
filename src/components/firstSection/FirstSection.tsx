@@ -30,7 +30,7 @@ const FirstSection: React.FC<Props> = (
 ) => {
 
     const handleIconClick = (event: React.MouseEvent<HTMLImageElement>, link: string): void => {
-        window.open('https://www.Instagram.com/', '_blank');
+        window.open(link, '_blank');
     };
 
     return (
