@@ -36,48 +36,43 @@ const SecondSection: React.FC<Props> = (
         email: '',
         name: '',
     });
-    const [isEmailValid, setEmailValid] = useState(true);
-    const [isNameValid, setNameValid] = useState(true);
-    const [isEmailEmpty, setIsEmailEmpty] = useState(false);
-    const [isNameEmpty, setIsNameEmpty] = useState(false);
-    const [isSuccess, setSuccess] = useState(false);
-    const refSecondSection: any = useRef(null);
-    const emailInputRef: any = useRef(null);
-    const nameInputRef: any = useRef(null);
-    const btnRef: any = useRef(null);
-    const spanRef: any = useRef(null);
-    const contactUsRef: any = useRef(null)
+    const [isEmailValid, setEmailValid] = useState<boolean>(true);
+    const [isNameValid, setNameValid] = useState<boolean>(true);
+    const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(false);
+    const [isNameEmpty, setIsNameEmpty] = useState<boolean>(false);
+    const [isSuccess, setSuccess] = useState<boolean>(false);
+    const refSecondSection = useRef<HTMLDivElement>(null);
+    const emailInputRef = useRef<HTMLInputElement>(null);
+    const nameInputRef = useRef<HTMLInputElement>(null);
+    const btnRef = useRef<HTMLButtonElement>(null);
+    const spanRef = useRef<HTMLDivElement>(null);
+    const contactUsRef = useRef<HTMLDivElement>(null)
 
     //------------------------------------form animation-----------------------------------//
     useEffect(() => {
-
         const ctx = gsap.context(() => {
             const svgPath = refForm.current;
             const emailInput = emailInputRef.current;
             const nameInput = nameInputRef.current;
             const btn = btnRef.current;
             const contactUs = contactUsRef.current;
-
             gsap.set(svgPath, {drawSVG: '50% 50%'});
 
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: svgPath,
                     start: 'bottom 90%',
-                    onEnter: () => tl.play().timeScale(1), // Перевіряємо напрямок прокрутки і відтворюємо анімацію
-                    onLeaveBack: () => tl.reverse().timeScale(-1), // Відтворюємо анімацію у зворотньому напрямку при зворотній прокрутці   scrub: true, // Включаємо режим scrub
+                    onEnter: () => tl.play().timeScale(1),
+                    onLeaveBack: () => tl.reverse().timeScale(-1),
                 },
             });
-
             tl.to(svgPath, {drawSVG: '0% 100%', duration: 1});
             tl.to(contactUs, {opacity: 1, duration: .3,})
             tl.to(emailInput, {opacity: 1, duration: .3,})
             tl.to(nameInput, {opacity: 1, duration: .3,})
             tl.to(btn, {opacity: 1, duration: .3,})
-
         }, refSecondSection);
         return () => ctx.revert();
-
     }, []);
 
     useEffect(() => {
@@ -87,8 +82,8 @@ const SecondSection: React.FC<Props> = (
             scrollTrigger: {
                 trigger: svgPath,
                 start: 'bottom 90%',
-                onEnter: () => tl.play().timeScale(1), // Перевіряємо напрямок прокрутки і відтворюємо анімацію
-                onLeaveBack: () => tl.reverse().timeScale(-1), // Відтворюємо анімацію у зворотньому напрямку при зворотній прокрутці   scrub: true, // Включаємо режим scrub
+                onEnter: () => tl.play().timeScale(1),
+                onLeaveBack: () => tl.reverse().timeScale(-1),
             },
         });
         tl.fromTo(span, {opacity: 0, duration: .3,}, {opacity: 1, duration: 1,})
@@ -109,21 +104,16 @@ const SecondSection: React.FC<Props> = (
                     scrub: 2,
                 }
             })
-
             tl.to(child, {x: "100vw", opacity: 1, duration: 5, ease: "none",})
                 .to(child, {x: "100vw", duration: 10, ease: "none"})
                 .to(child, {x: "0vw", opacity: 0, duration: 5, ease: "none",})
-
-
         }, refSecondSection);
         return () => ctx.revert();
-
     }, []);
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            const child = refSecondChild.current;
-
+            const child = refSecondChild.current
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: child,
@@ -135,7 +125,6 @@ const SecondSection: React.FC<Props> = (
             tl.to(child, {x: "-100vw", opacity: 1, duration: 5, ease: "none",})
                 .to(child, {x: "-100vw", duration: 10, ease: "none"})
                 .to(child, {x: "0vw", opacity: 0, duration: 5, ease: "none",})
-
         }, refSecondSection);
         return () => ctx.revert();
     }, []);
@@ -143,7 +132,6 @@ const SecondSection: React.FC<Props> = (
     useEffect(() => {
         const ctx = gsap.context(() => {
             const child = refThirdChild.current;
-
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: child,
@@ -152,11 +140,8 @@ const SecondSection: React.FC<Props> = (
                     scrub: 2,
                 }
             })
-
             tl.to(child, {x: "100vw", opacity: 1, duration: 5, ease: "none",})
                 .to(child, {x: "100vw", duration: 10, ease: "none"})
-
-
         }, refSecondSection);
         return () => ctx.revert();
     }, []);

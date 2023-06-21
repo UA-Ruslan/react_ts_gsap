@@ -2,7 +2,7 @@ import React from "react";
 import style from './foter.module.scss'
 import LogoComponent from "../logoComponent/LogoComponent";
 
-const Footer = () => {
+const Footer: React.FC = () => {
 
     const handleClick = (e: React.MouseEvent): void => {
         e.preventDefault()

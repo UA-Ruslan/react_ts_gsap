@@ -25,7 +25,7 @@ const HeaderAndDropMenuHrefs: React.FC<Props> = (
         refForm,
     }) => {
 
-    const scrollToElement = (event: React.MouseEvent<HTMLAnchorElement>, ref: any, position: string) => {
+    const scrollToElement = (event: React.MouseEvent<HTMLAnchorElement>, ref: any, position: string): void => {
         event.preventDefault();
         setDropdownMenuActive(false)
         smoother.current.scrollTo(ref.current, true, position);

@@ -57,7 +57,7 @@ const BurgerBtn: React.FC<BurgerBtnProps> = (
     }, [isDropdownMenuActive]);
 
 
-    const handleClick = () => {
+    const handleClick = (): void => {
         setDropdownMenuActive(!isDropdownMenuActive)
     }
 

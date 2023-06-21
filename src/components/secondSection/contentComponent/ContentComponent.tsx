@@ -42,7 +42,6 @@ const ContentComponent: React.FC<Props> = ({
             height: 100,
             duration: 0.1,
         }, .2);
-
     }, []);
 
     useEffect(() => {
@@ -66,7 +65,7 @@ const ContentComponent: React.FC<Props> = ({
     const onClickImg = (): void => {
         setReadMoreActive(!isReadMoreActive)
     }
-    const OnBlurImg = (e: any): void => {
+    const OnBlurImg = (e: React.FocusEvent<HTMLImageElement>): void => {
         if (stopImgOnBlur) {
             e.preventDefault()
         } else {

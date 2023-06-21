@@ -29,11 +29,8 @@ const FirstSection: React.FC<Props> = (
     }
 ) => {
 
-    const handleInstagramClick = () => {
+    const handleIconClick = (event: React.MouseEvent<HTMLImageElement>, link: string): void => {
         window.open('https://www.Instagram.com/', '_blank');
-    };
-    const handleTwitterClick = () => {
-        window.open('https://www.twitter.com/', '_blank');
     };
 
     return (
@@ -58,11 +55,11 @@ const FirstSection: React.FC<Props> = (
                         </div>
                         <div className={style.iconsWrapper}>
                             <a href="https://www.instagram.com/" target="_blank">
-                                <img onClick={handleInstagramClick} src={instagram} width={24} height={24}
+                                <img onClick={(event) => {handleIconClick(event, 'https://www.Instagram.com/')}} src={instagram} width={24} height={24}
                                      alt="instagramImg"/>
                             </a>
                             <a href="https://www.twitter.com/" target="_blank">
-                                <img onClick={handleTwitterClick} src={twitter} width={24} height={24}
+                                <img onClick={(event) => {handleIconClick(event, 'https://www.twitter.com/')}} src={twitter} width={24} height={24}
                                      alt="twitterImg"/>
                             </a>
                         </div>
