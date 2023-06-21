@@ -4,7 +4,7 @@ import arrowImage from '../../../img/secondSection/arrow.png'
 import gsap from "gsap-trial";
 
 
-interface ContentComponentProps {
+interface Props {
     iconImgSrc: string
     mainImgSrc: string,
     childStyle: string,
@@ -15,22 +15,22 @@ interface ContentComponentProps {
     readMoreContent?: ReactNode,
 }
 
-const ContentComponent: React.FC<ContentComponentProps> = ({
-                                                               mainImgSrc,
-                                                               iconImgSrc,
-                                                               childStyle,
-                                                               childRef,
-                                                               h4Content,
-                                                               h2Content,
-                                                               pContent,
-                                                               readMoreContent,
-                                                           }) => {
+const ContentComponent: React.FC<Props> = ({
+                                               mainImgSrc,
+                                               iconImgSrc,
+                                               childStyle,
+                                               childRef,
+                                               h4Content,
+                                               h2Content,
+                                               pContent,
+                                               readMoreContent,
+                                           }) => {
 
-    const [isReadMoreActive, setReadMoreActive] = useState(false)
-
-    const arrowRef: any = useRef(null);
+    const [isReadMoreActive, setReadMoreActive] = useState<boolean>(false)
+    const [stopImgOnBlur, setStopImgOnBlur] = useState<boolean>(false)
+    const arrowRef: any = useRef<HTMLDivElement>(null);
     const tl: any = useRef(null);
-    const readMoreContentRef: any = useRef(null);
+    const readMoreContentRef: any = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         tl.current = gsap.timeline({paused: true});
@@ -49,28 +49,42 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
         isReadMoreActive ? tl.current.play() : tl.current.reverse();
     }, [isReadMoreActive])
 
-    const handleMouseEnter = () => {
+    const onMouseEnterImg = (): void => {
         gsap.to(arrowRef.current, {
             scale: 1.2,
             duration: 0.1,
         });
     };
 
-    const handleMouseLeave = () => {
+    const onMouseLeaveImg = (): void => {
         gsap.to(arrowRef.current, {
             scale: 1,
             duration: 0.1,
         });
     };
 
-    const handleClick = () => {
+    const onClickImg = (): void => {
         setReadMoreActive(!isReadMoreActive)
     }
-
-    const handleOnBlur = () => {
-        setReadMoreActive(false)
+    const OnBlurImg = (e: any): void => {
+        if (stopImgOnBlur) {
+            e.preventDefault()
+        } else {
+            setReadMoreActive(false)
+        }
     }
+    const onMouseEnterReadMoreContent = (): void => {
+        setStopImgOnBlur(true)
+    }
+    const onMouseLeaveReadMoreContent = (): void => {
+        setStopImgOnBlur(false)
+    }
+    const onBlurReadMoreContent = (): void => {
+        setTimeout(() => {
+            setReadMoreActive(false)
+        },100)
 
+    }
     return (
         <div ref={childRef} className={childStyle}>
             <div className={style.childContentWrapper}>
@@ -90,17 +104,24 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                     <p>read more</p>
                     <img
                         tabIndex={0}
-                        onBlur={handleOnBlur}
-                        onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}
-                        onClick={handleClick}
+                        onBlur={OnBlurImg}
+                        onMouseEnter={onMouseEnterImg}
+                        onMouseLeave={onMouseLeaveImg}
+                        onClick={onClickImg}
                         ref={arrowRef}
                         src={arrowImage}
                         width={24}
                         height={16}
                         alt="arrowImg"/>
                 </div>
-                <div ref={readMoreContentRef} className={style.readMoreContent}>
+                <div
+                    tabIndex={0}
+                    onBlur={onBlurReadMoreContent}
+                    onMouseEnter={onMouseEnterReadMoreContent}
+                    onMouseLeave={onMouseLeaveReadMoreContent}
+                    ref={readMoreContentRef}
+                    className={style.readMoreContent}
+                >
                     {readMoreContent}
                 </div>
             </div>

@@ -11,21 +11,29 @@ import Footer from "./components/footer/Footer";
 
 gsap.registerPlugin(ScrollSmoother);
 
+ export interface CommonRefs {
+    refFirstChild: React.RefObject<HTMLDivElement>,
+    refSecondChild: React.RefObject<HTMLDivElement>,
+    refThirdChild: React.RefObject<HTMLDivElement>,
+    refForm: React.LegacyRef<SVGPathElement>,
+}
+
 const App: React.FC = () => {
 
     const [isDropdownMenuActive, setDropdownMenuActive] = useState<boolean>(false)
 
-    const main: React.RefObject<HTMLDivElement> | null = useRef(null)
-    const smoother: React.PropsWithRef<any> = useRef(null)
-    const refFirstChild: React.RefObject<HTMLDivElement> | null = useRef(null);
-    const refSecondChild: React.RefObject<HTMLDivElement> | null = useRef(null);
-    const refThirdChild: React.RefObject<HTMLDivElement> | null = useRef(null);
-    const formRef: React.RefObject<HTMLDivElement> | null = useRef(null)
+    const main = useRef<HTMLDivElement>(null)
+    const smoother: any = useRef(null)
+    const commonRefs: CommonRefs = {
+        refFirstChild: useRef<HTMLDivElement>(null),
+        refSecondChild: useRef<HTMLDivElement>(null),
+        refThirdChild: useRef<HTMLDivElement>(null),
+        refForm: useRef<SVGPathElement>(null),
+    }
 
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
-
             smoother.current = ScrollSmoother.create({
                 smooth: 1,
                 effects: true,
@@ -35,52 +43,23 @@ const App: React.FC = () => {
     }, []);
 
 
-
-
-    const handleScrollToFirstChild = (event: React.MouseEvent<HTMLAnchorElement>) => {
-        event.preventDefault();
-        const ref = refFirstChild.current
-        smoother.current.scrollTo(ref, true, 'bottom bottom');
-    };
-
-    const handleScrollToSecondChild = (event: React.MouseEvent<HTMLAnchorElement>) => {
-        event.preventDefault();
-        const ref = refSecondChild.current
-        smoother.current.scrollTo(ref, true, 'bottom bottom');
-    };
-
-    const handleScrollToThirdChild = (event: React.MouseEvent<HTMLAnchorElement>) => {
-        event.preventDefault();
-        const ref = refThirdChild.current
-        smoother.current.scrollTo(ref, true, 'bottom bottom');
-    };
-
-    const handleScrollToContactUs = (event: React.MouseEvent<HTMLAnchorElement>) => {
-        event.preventDefault()
-        const ref = formRef.current;
-        smoother.current.scrollTo(ref, true, 'center center')
-    }
-
     return (
         <div id='smooth-wrapper' ref={main}>
 
             <BurgerBtn
                 isDropdownMenuActive={isDropdownMenuActive}
                 setDropdownMenuActive={setDropdownMenuActive}
-                HeaderAndDropMenuHrefs={<HeaderAndDropMenuHrefs
-                    handleScrollToFirstChild={handleScrollToFirstChild}
-                    handleScrollToSecondChild={handleScrollToSecondChild}
-                    handleScrollToThirdChild={handleScrollToThirdChild}
-                    handleScrollToContactUs={handleScrollToContactUs}
-                    setDropdownMenuActive={setDropdownMenuActive}
-                    hrefContainer={style.hrefContainer}
-                    accountWrapper={style.accountWrapper}
-                    hrefWrapper={style.hrefWrapper}
-                    hrefStyle={style.hrefStyle}
-
-                    smoother={smoother}
-                    refSecondChild={refSecondChild}
-                />}
+                HeaderAndDropMenuHrefs={
+                    <HeaderAndDropMenuHrefs
+                        setDropdownMenuActive={setDropdownMenuActive}
+                        hrefContainer={style.hrefContainer}
+                        accountWrapper={style.accountWrapper}
+                        hrefWrapper={style.hrefWrapper}
+                        hrefStyle={style.hrefStyle}
+                        smoother={smoother}
+                        {...commonRefs}
+                    />
+                }
             />
 
             <div id='smooth-content'>
@@ -88,21 +67,13 @@ const App: React.FC = () => {
                 <div className='appWrapper'>
 
                     <FirstSection
-                        handleScrollToFirstChild={handleScrollToFirstChild}
-                        handleScrollToSecondChild={handleScrollToSecondChild}
-                        handleScrollToThirdChild={handleScrollToThirdChild}
-                        handleScrollToContactUs={handleScrollToContactUs}
                         setDropdownMenuActive={setDropdownMenuActive}
-
                         smoother={smoother}
-                        refSecondChild={refSecondChild}
+                        {...commonRefs}
                     />
 
                     <SecondSection
-                        refFirstChild={refFirstChild}
-                        refSecondChild={refSecondChild}
-                        refThirdChild={refThirdChild}
-                        formRef={formRef}
+                        {...commonRefs}
                     />
 
                     <Footer/>

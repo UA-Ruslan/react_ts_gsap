@@ -2,28 +2,23 @@ import React from "react";
 import style from './header.module.scss'
 import LogoComponent from "../logoComponent/LogoComponent";
 import HeaderAndDropMenuHrefs from "../headerAndDropMenuHrefs/HeaderAndDropMenuHrefs";
+import {CommonRefs} from "../../App";
 
-interface handleClick {
-    handleScrollToFirstChild: (event: React.MouseEvent<HTMLAnchorElement>) => void,
-    handleScrollToSecondChild: (event: React.MouseEvent<HTMLAnchorElement>) => void,
-    handleScrollToThirdChild: (event: React.MouseEvent<HTMLAnchorElement>) => void,
-    handleScrollToContactUs: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+interface Props extends CommonRefs {
     setDropdownMenuActive: React.Dispatch<React.SetStateAction<boolean>>,
-
-    refSecondChild: any,
-    smoother:React.PropsWithRef<any>,
+    smoother: any,
 }
 
-const Header: React.FC<handleClick> = ({
-                                           handleScrollToFirstChild,
-                                           handleScrollToSecondChild,
-                                           handleScrollToThirdChild,
-                                           handleScrollToContactUs,
-                                           setDropdownMenuActive,
-
-                                           refSecondChild,
-                                           smoother,
-                                       }) => {
+const Header: React.FC<Props> = (
+    {
+        setDropdownMenuActive,
+        smoother,
+        refFirstChild,
+        refSecondChild,
+        refThirdChild,
+        refForm,
+    }
+) => {
     return (
         <header className={style.header}>
 
@@ -31,17 +26,15 @@ const Header: React.FC<handleClick> = ({
 
             <HeaderAndDropMenuHrefs
                 setDropdownMenuActive={setDropdownMenuActive}
-                handleScrollToFirstChild={handleScrollToFirstChild}
-                handleScrollToSecondChild={handleScrollToSecondChild}
-                handleScrollToThirdChild={handleScrollToThirdChild}
-                handleScrollToContactUs={handleScrollToContactUs}
                 hrefContainer={style.hrefContainer}
                 hrefWrapper={style.hrefWrapper}
                 hrefStyle={style.hrefStyle}
                 accountWrapper={style.accountWrapper}
-
                 smoother={smoother}
+                refFirstChild={refFirstChild}
                 refSecondChild={refSecondChild}
+                refThirdChild={refThirdChild}
+                refForm={refForm}
             />
 
         </header>

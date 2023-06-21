@@ -145,19 +145,6 @@
   }
 }
 
-@media screen and (max-width: 1024px) {
-  .secondChild {
-    .mainImgWrapper {
-      height: 100%;
-
-      img {
-        width: 490px;
-        height: 708px;
-      }
-    }
-  }
-}
-
 @media screen and (max-width: 768px) {
   .mainChild {
     flex-direction: column-reverse;

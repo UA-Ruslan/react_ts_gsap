@@ -8,12 +8,18 @@ interface BurgerBtnProps {
     HeaderAndDropMenuHrefs: React.ReactNode;
 }
 
-const BurgerBtn: React.FC<BurgerBtnProps> = ({isDropdownMenuActive, setDropdownMenuActive, HeaderAndDropMenuHrefs}) => {
+const BurgerBtn: React.FC<BurgerBtnProps> = (
+    {
+        isDropdownMenuActive,
+        setDropdownMenuActive,
+        HeaderAndDropMenuHrefs
+    }
+) => {
 
-    const refItem1: any = useRef(null);
-    const refItem2: any = useRef(null);
-    const refItem3: any = useRef(null);
-    const dropMenu: any = useRef(null)
+    const refItem1 = useRef<HTMLDivElement>(null);
+    const refItem2 = useRef<HTMLDivElement>(null);
+    const refItem3 = useRef<HTMLDivElement>(null);
+    const dropMenu = useRef<HTMLDivElement>(null)
     const tl: any = useRef(null);
 
 

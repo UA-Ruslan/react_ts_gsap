@@ -11,7 +11,7 @@ import mainImage01 from '../../img/secondSection/main01.png'
 import mainImage02 from '../../img/secondSection/main02.png'
 import mainImage03 from '../../img/secondSection/main03.png'
 import ContentComponent from "./contentComponent/ContentComponent";
-
+import {CommonRefs} from "../../App";
 
 gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin);
 
@@ -20,14 +20,17 @@ interface FormDataProps {
     name: string,
 }
 
-interface SecondSectionProps {
-    refFirstChild:any,
-    refSecondChild:any,
-    refThirdChild:any,
-    formRef:any,
+interface Props extends CommonRefs{
+    refForm: any,
 }
 
-const SecondSection: React.FC<SecondSectionProps> = ({refFirstChild, refSecondChild, refThirdChild, formRef,}) => {
+const SecondSection: React.FC<Props> = (
+    {
+        refFirstChild,
+        refSecondChild,
+        refThirdChild,
+        refForm,
+    }) => {
 
     const [formData, setFormData] = useState<FormDataProps>({
         email: '',
@@ -38,12 +41,7 @@ const SecondSection: React.FC<SecondSectionProps> = ({refFirstChild, refSecondCh
     const [isEmailEmpty, setIsEmailEmpty] = useState(false);
     const [isNameEmpty, setIsNameEmpty] = useState(false);
     const [isSuccess, setSuccess] = useState(false);
-
     const refSecondSection: any = useRef(null);
-    // const refFirstChild: any = useRef(null);
-    // const refSecondChild: any = useRef(null);
-    // const refThirdChild: any = useRef(null);
-    // const formRef: any = useRef(null);
     const emailInputRef: any = useRef(null);
     const nameInputRef: any = useRef(null);
     const btnRef: any = useRef(null);
@@ -54,7 +52,7 @@ const SecondSection: React.FC<SecondSectionProps> = ({refFirstChild, refSecondCh
     useEffect(() => {
 
         const ctx = gsap.context(() => {
-            const svgPath = formRef.current;
+            const svgPath = refForm.current;
             const emailInput = emailInputRef.current;
             const nameInput = nameInputRef.current;
             const btn = btnRef.current;
@@ -83,7 +81,7 @@ const SecondSection: React.FC<SecondSectionProps> = ({refFirstChild, refSecondCh
     }, []);
 
     useEffect(() => {
-        const svgPath = formRef.current;
+        const svgPath = refForm.current;
         const span = spanRef.current;
         const tl = gsap.timeline({
             scrollTrigger: {
@@ -308,7 +306,7 @@ const SecondSection: React.FC<SecondSectionProps> = ({refFirstChild, refSecondCh
                 <h2 ref={contactUsRef} className={style.contactUS}>CONTACT US</h2>
                 <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
                     <path
-                        ref={formRef}
+                        ref={refForm}
                         strokeWidth='5'
                         stroke='white'
                         fill='none'

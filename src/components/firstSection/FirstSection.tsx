@@ -10,28 +10,24 @@ import twitter from "../../img/firstSectionImages/twitter.png";
 import arrow from "../../img/firstSectionImages/arrow.png";
 import Header from "../header/Header";
 import LogoComponent from "../logoComponent/LogoComponent";
+import {CommonRefs} from "../../App";
 
-interface handleClick {
-    handleScrollToFirstChild: (event: React.MouseEvent<HTMLAnchorElement>) => void,
-    handleScrollToSecondChild: (event: React.MouseEvent<HTMLAnchorElement>) => void,
-    handleScrollToThirdChild: (event: React.MouseEvent<HTMLAnchorElement>) => void,
-    handleScrollToContactUs: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+
+interface Props extends CommonRefs {
     setDropdownMenuActive: React.Dispatch<React.SetStateAction<boolean>>,
-
-    refSecondChild:any,
-    smoother:React.PropsWithRef<any>,
+    smoother: any,
 }
 
-const FirstSection: React.FC<handleClick> = ({
-                                                 handleScrollToFirstChild,
-                                                 handleScrollToSecondChild,
-                                                 handleScrollToThirdChild,
-                                                 handleScrollToContactUs,
-                                                 setDropdownMenuActive,
-
-                                                 refSecondChild,
-                                                 smoother,
-                                             }) => {
+const FirstSection: React.FC<Props> = (
+    {
+        setDropdownMenuActive,
+        smoother,
+        refFirstChild,
+        refSecondChild,
+        refThirdChild,
+        refForm,
+    }
+) => {
 
     const handleInstagramClick = () => {
         window.open('https://www.Instagram.com/', '_blank');
@@ -48,13 +44,11 @@ const FirstSection: React.FC<handleClick> = ({
 
                 <Header
                     setDropdownMenuActive={setDropdownMenuActive}
-                    handleScrollToFirstChild={handleScrollToFirstChild}
-                    handleScrollToSecondChild={handleScrollToSecondChild}
-                    handleScrollToThirdChild={handleScrollToThirdChild}
-                    handleScrollToContactUs={handleScrollToContactUs}
-
                     smoother={smoother}
+                    refFirstChild={refFirstChild}
                     refSecondChild={refSecondChild}
+                    refThirdChild={refThirdChild}
+                    refForm={refForm}
                 />
 
                 <div className={style.contentContainer}>

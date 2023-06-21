@@ -3,11 +3,11 @@ import style from './logoComponent.module.scss'
 import logoImg from '../../img/header/Logo.svg'
 
 
-interface LogoComponentProps {
+interface Props {
     customStyle?: string;
 }
 
-const LogoComponent: React.FC<LogoComponentProps> = ({customStyle}) => {
+const LogoComponent: React.FC<Props> = ({customStyle}) => {
     return (
 
             <div className={customStyle}>
