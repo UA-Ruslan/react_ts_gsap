@@ -13,11 +13,20 @@
   padding: 0 100px;
 
   .mainImgWrapper {
-    height: 100%;
+    height: 720px;
+    min-width: 566px;
+    max-width: 566px;
+    overflow: hidden;
 
     img {
-      width: auto;
-      max-height: 100%;
+      width: 100%;
+      height: 100%;
+      transition: .2s;
+
+      &:hover {
+        transform: scale(1.2);
+        transition: .2s;
+      }
     }
   }
 
@@ -145,6 +154,14 @@
   }
 }
 
+@media screen and (max-width: 1024px) {
+  .mainChild .mainImgWrapper {
+    min-width: 500px;
+    max-width: 500px;
+    height: 680px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .mainChild {
     flex-direction: column-reverse;
@@ -153,11 +170,14 @@
 
     .mainImgWrapper {
       max-height: calc(100% - 40px);
-      padding-bottom: 15px;
+      margin-bottom: 15px;
       display: flex;
+      min-width: auto;
+      max-width: 566px;
+      height: 720px;
 
       img {
-        width: auto;
+        width: 100%;
         height: 100%;
         margin: 0 auto;
       }
